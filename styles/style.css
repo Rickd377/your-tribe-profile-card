@@ -1,28 +1,41 @@
-* {
-  box-sizing: border-box; /* uitleg over wat dit is */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
-/* HTML */
-/* Hier wordt met een 'type selector' een element in de html geselecteerd. */
-/* Dit verwijst naar het <html> element. De <html> krijgt een lichtgele achtergrond. */
+@keyframes spinBorder {
+  to {
+    --angle: 1turn;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #f9f9f9;
+  --font-color: #224;
+  --border-radius: 1.5rem;
+  --border-width: 5px;
+}
 
 html {
-  background:lightyellow;
+  background: var(--bg-color);
 }
 
-/* BODY */
-/* Hier wordt met een 'type selector' het <body> element geselecteerd. */
-/* In de <body> wordt de inhoud met "display: flex" in het midden geplaats. */
-/* En krijgt de <body> en alle inhoud een font en kleur. */
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   
-  height: 100vh;
+  min-height: 100svh;
   
-  font-family: open sans;
-  color: #10214e; /* de tekst kleur wordt in hex kleuren bepaald. */
+  font-family: system-ui;
+  color: var(--font-color);
 }
 
 /* ARTICLE */
@@ -42,12 +55,27 @@ article {
   max-width: 25em;
   min-width: 20em;
   
-  border-radius: 1rem;
-  background: rgb(0 239 255);
-  background: linear-gradient(0deg, rgb(0 239 255) 40%, #4e54c8 100%);
-  box-shadow: 0 0 20px 20px rgb(0 0 0 / .1);
-  
+  border-radius: calc(var(--border-radius) - var(--border-width));;
+  background: 
+    conic-gradient(hsl(0 0% 100% / .1) 25%, hsl(0 0% 100% / 0) 25% 50%, hsl(0 0% 100% / .1) 50% 75%, hsl(0 0% 100% / 0) 75%),
+    linear-gradient(in oklch 35deg, lightblue, lightpink);
+  background-size: 40px 40px, 100% 100%;
   transition: .25s;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--border-width) * -1);
+    background: conic-gradient(in oklch from var(--angle), dodgerblue, hotpink, dodgerblue);
+    z-index: -1;
+    border-radius: var(--border-radius);
+    animation: spinBorder 3s linear infinite;
+  }
+
+  &::after {
+    filter: blur(10px);
+  }
 }
 
 /* HEADER */
@@ -63,8 +91,6 @@ header {
 /* Hier krijgt het <h1> element de styling. */
 h1 {
   margin: 2rem 0 1rem 0; /* Margin is de ruimte om het element heen. Boven beginnen, met de klok mee */
-  
-  color: rgb(0 239 255); /* De tekst kleur wordt in rgb() bepaald. */
 }
 
 /* P */
@@ -88,7 +114,7 @@ button {
   
   border: none;
   border-radius: 50%; /* De border-radius geeft de <button> ronde hoekjes. */
-  background: rgb(0 239 255);
+  background: #add8e6;
   
   scale:.8;
   
@@ -99,12 +125,12 @@ button {
 /* :hover is een 'Pseudo-class selector', daarmee worden interacties op het element gestyled. */
 button:hover {
   cursor: pointer;
-  background: darkgoldenrod;
+  background: #7bbcd2;
 }
 /* Met de 'Pseudo-class selector' :focus kan je bepalen hoe het element er uit moet zien als de tab toets op het toetsenbord wordt gebruikt. */
 button:focus {
   outline: none;
-  background: darkgoldenrod;
+  background: #7bbcd2;
 }
 
 /* In het <button> element staat een <svg> voor het icoon. */
@@ -168,7 +194,7 @@ dl {
   padding: 5rem 0 3rem;
   
   text-align: center;
-  background: rgb(255 255 255);
+  background: rgba(255, 255, 255, .4);
 
   dt {
     margin-top: .25rem;
@@ -217,7 +243,6 @@ article > p {
   margin-top: 0;
   padding: 3rem 2rem;
   
-  background: rgb(255 255 255 / 0.5);
   border-radius: 0 0 1rem 1rem;
   text-align: center;
 }
