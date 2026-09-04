@@ -1,26 +1,29 @@
+/* custom property dat de angle defineerd is */
 @property --angle {
   syntax: "<angle>";
   inherits: false;
   initial-value: 0deg;
 }
 
+/* animation dat de custom variable volledig rond-draait */
 @keyframes spinBorder {
   to {
     --angle: 1turn;
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* variables om later te gebruiken in de code */
 :root {
   --bg-color: #f9f9f9;
   --font-color: #224;
   --border-radius: 1.5rem;
   --border-width: 5px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
@@ -34,7 +37,7 @@ body {
   
   min-height: 100svh;
   
-  font-family: system-ui;
+  font-family: "Poppins", sans-serif;
   color: var(--font-color);
 }
 
@@ -43,7 +46,8 @@ article {
   width: 50vw;
   max-width: 25em;
   min-width: 20em;
-  border-radius: calc(var(--border-radius) - var(--border-width));;
+  border-radius: calc(var(--border-radius) - var(--border-width));
+  /* coole gradient background */
   background:
     conic-gradient(hsl(0 0% 100% / .1) 25%, hsl(0 0% 100% / 0) 25% 50%, hsl(0 0% 100% / .1) 50% 75%, hsl(0 0% 100% / 0) 75%),
     linear-gradient(in oklch 35deg, lightblue, lightpink);
